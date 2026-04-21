@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { NewsletterForm } from "@/components/shared/NewsletterForm";
 
 export const Footer: React.FC = () => {
   const year = new Date().getFullYear();
@@ -97,6 +98,17 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
             </ul>
+          </div>
+        </div>
+
+        {/* Newsletter */}
+        <div className="border-t border-violet-900/20 py-8 mb-8">
+          <div className="max-w-md">
+            <h4 className="font-semibold text-white mb-2">Mantente actualizado</h4>
+            <p className="text-gray-400 text-sm mb-4">
+              Recibe tips de IA y casos de éxito directamente en tu inbox.
+            </p>
+            <NewsletterForm />
           </div>
         </div>
 
