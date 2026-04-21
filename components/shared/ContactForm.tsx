@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { supabase, isSupabaseConfigured, isLocalDevelopment } from "@/lib/supabase";
 
 interface ContactFormData {
   name: string;
@@ -204,6 +204,8 @@ const AnimatedStatus: React.FC<{
 }> = ({ status, errorMessage }) => {
   if (status === "idle" || status === "loading") return null;
 
+  const isDev = isLocalDevelopment();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: -10 }}
@@ -214,9 +216,18 @@ const AnimatedStatus: React.FC<{
           : "bg-red-900/20 border border-red-600/50 text-red-400"
       }`}
     >
-      {status === "success"
-        ? "✓ ¡Gracias! En breve nos pondremos en contacto."
-        : errorMessage}
+      {status === "success" ? (
+        <div>
+          <div>✓ ¡Gracias! En breve nos pondremos en contacto.</div>
+          {isDev && (
+            <div className="text-xs mt-2 opacity-75">
+              (Modo desarrollo - datos guardados localmente)
+            </div>
+          )}
+        </div>
+      ) : (
+        errorMessage
+      )}
     </motion.div>
   );
 };
