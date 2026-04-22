@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/shared/Button";
+import Image from "next/image";
 
 const navLinks = [
   { label: "Qué es", hrefHome: "#que-es", hrefPage: "/que-es" },
@@ -22,18 +23,12 @@ export const Navbar: React.FC = () => {
     <nav className="sticky top-0 z-50 bg-black/80 backdrop-blur border-b border-violet-900/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="text-2xl font-bold text-white">
-            <span className="bg-gradient-to-r from-violet-400 to-violet-600 bg-clip-text text-transparent">
-              Merlina
-            </span>
+          <Link href="/">
+            <Image src="/merlina-logo.png" alt="Merlina AI" width={140} height={36} className="h-9 w-auto" priority />
           </Link>
           <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
-              <Link
-                key={link.hrefPage}
-                href={isHome ? link.hrefHome : link.hrefPage}
-                className="px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-violet-900/20 transition-colors"
-              >
+              <Link key={link.hrefPage} href={isHome ? link.hrefHome : link.hrefPage} className="px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-violet-900/20 transition-colors">
                 {link.label}
               </Link>
             ))}
@@ -42,10 +37,7 @@ export const Navbar: React.FC = () => {
             <Link href="/demo" className="hidden md:block">
               <Button>Hablar con Merlina</Button>
             </Link>
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-violet-900/20 transition-colors"
-            >
+            <button onClick={() => setIsOpen(!isOpen)} className="md:hidden p-2 rounded-lg hover:bg-violet-900/20 transition-colors">
               {isOpen ? <X className="text-white" size={24} /> : <Menu className="text-white" size={24} />}
             </button>
           </div>
@@ -53,19 +45,12 @@ export const Navbar: React.FC = () => {
         {isOpen && (
           <div className="md:hidden pb-4 border-t border-violet-900/30">
             {navLinks.map((link) => (
-              <Link
-                key={link.hrefPage}
-                href={isHome ? link.hrefHome : link.hrefPage}
-                onClick={() => setIsOpen(false)}
-                className="block px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-violet-900/20 transition-colors"
-              >
+              <Link key={link.hrefPage} href={isHome ? link.hrefHome : link.hrefPage} onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-violet-900/20 transition-colors">
                 {link.label}
               </Link>
             ))}
             <div className="px-3 py-4">
-              <Link href="/demo" className="block">
-                <Button className="w-full">Hablar con Merlina</Button>
-              </Link>
+              <Link href="/demo" className="block"><Button className="w-full">Hablar con Merlina</Button></Link>
             </div>
           </div>
         )}
