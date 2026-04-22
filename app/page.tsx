@@ -1,5 +1,4 @@
 "use client";
-
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/home/Hero";
@@ -15,14 +14,12 @@ export default function Home() {
     <>
       <Navbar />
       <main className="bg-black">
-        <Hero />
-        <Problem />
-        <WhatIsMerlina />
-        <HowItWorks />
-        <KPIResults />
-        <UseCases />
-        <CTAFinal />
-        {/* Próximas secciones: ComparisonTable, Testimonials */}
+        <section id="hero"><Hero /></section>
+        <section id="que-es"><Problem /><WhatIsMerlina /></section>
+        <section id="como-funciona"><HowItWorks /></section>
+        <section id="resultados"><KPIResults /></section>
+        <section id="casos-de-uso"><UseCases /></section>
+        <section id="faq"><CTAFinal /></section>
       </main>
       <Footer />
     </>
