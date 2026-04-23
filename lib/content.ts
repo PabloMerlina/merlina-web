@@ -3,9 +3,9 @@
 export const CONTENT = {
   // Home
   hero: {
-    headline: "Hola, soy Merlina.",
+    headline: "Tu negocio habla todo el tiempo.",
     subheadline:
-      "Convierto tus datos en decisiones… y tus decisiones en resultados.",
+      "Yo lo escucho, lo entiendo y actúo.",
   },
 
   problem: {
