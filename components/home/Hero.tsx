@@ -46,8 +46,8 @@ export const Hero: React.FC = () => {
             variants={itemVariants}
             className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-8"
           >
-            Inteligencia artificial que entiende tu negocio y te ayuda a tomar
-            decisiones en segundos.
+            Desde métricas hasta enviar correos. Capa de decisiones, un solo
+            agente, un solo chat.
           </motion.p>
 
           {/* CTA Buttons */}
