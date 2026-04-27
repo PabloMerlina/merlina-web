@@ -6,6 +6,7 @@ interface LeadData {
   company: string;
   role: string;
   email: string;
+  message?: string;
 }
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -21,7 +22,6 @@ export async function POST(request: NextRequest) {
   try {
     const data: LeadData = await request.json();
 
-    // Validar datos
     if (!data.name || !data.company || !data.role || !data.email) {
       return NextResponse.json(
         { error: "Todos los campos son requeridos" },
@@ -29,8 +29,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Guardar en Supabase
-    const { error } = await supabase
+    const { data: insertedData, error } = await supabase
       .from("leads")
       .insert([
         {
@@ -38,21 +37,24 @@ export async function POST(request: NextRequest) {
           company: data.company,
           role: data.role,
           email: data.email,
+          message: data.message || null,
+          status: "new",
         },
-      ]);
+      ])
+      .select();
 
     if (error) {
       console.error("Supabase error:", error);
       return NextResponse.json(
-        { error: "Error al guardar el lead" },
+        { error: "Error al guardar el lead", details: error.message },
         { status: 500 }
       );
     }
 
-    console.log("Lead guardado:", data.email);
+    console.log("Lead guardado:", data.email, insertedData);
 
     return NextResponse.json(
-      { success: true, message: "Lead registrado correctamente" },
+      { success: true, message: "Lead registrado correctamente", data: insertedData },
       { status: 200 }
     );
   } catch (error) {

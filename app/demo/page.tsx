@@ -9,6 +9,7 @@ interface FormData {
   company: string;
   role: string;
   email: string;
+  message?: string;
 }
 
 export default function DemoPage() {
@@ -139,6 +140,15 @@ export default function DemoPage() {
                   className="w-full px-4 py-3 bg-white/10 border border-violet-500/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500"
                 />
                 {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>}
+              </div>
+
+              <div>
+                <textarea
+                  {...register("message")}
+                  placeholder="¿Qué desafío tienes? (opcional)"
+                  rows={3}
+                  className="w-full px-4 py-3 bg-white/10 border border-violet-500/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 resize-none"
+                />
               </div>
 
               <button
