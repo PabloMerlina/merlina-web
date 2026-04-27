@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 
 interface LeadData {
   name: string;
@@ -6,6 +7,15 @@ interface LeadData {
   role: string;
   email: string;
 }
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error("Missing Supabase environment variables");
+}
+
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export async function POST(request: NextRequest) {
   try {
@@ -19,13 +29,27 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // TODO: Guardar en Supabase o enviar email
-    console.log("Nuevo lead:", data);
+    // Guardar en Supabase
+    const { error } = await supabase
+      .from("leads")
+      .insert([
+        {
+          name: data.name,
+          company: data.company,
+          role: data.role,
+          email: data.email,
+        },
+      ]);
 
-    // Aquí puedes:
-    // 1. Guardar en Supabase
-    // 2. Enviar email a tu dirección
-    // 3. Integrar con tu CRM
+    if (error) {
+      console.error("Supabase error:", error);
+      return NextResponse.json(
+        { error: "Error al guardar el lead" },
+        { status: 500 }
+      );
+    }
+
+    console.log("Lead guardado:", data.email);
 
     return NextResponse.json(
       { success: true, message: "Lead registrado correctamente" },
